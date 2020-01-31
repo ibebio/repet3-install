@@ -1,0 +1,106 @@
+* REPET Pipeline quick intro
+** Prerequisites
+*** Install conda
+*** Install a recent version of udocker
+The one in the conda repositories is too old. Once conda is set up,
+udocker can be installed into the base environment via pip. Check that
+the conda installation of pip is used:
+
+#+BEGIN_SRC bash
+which pip
+# Should give you the path to the pip executable in your conda base environment.
+# If not, do NOT continue, and find the reason why not first.
+#+END_SRC
+
+Then, install udocker into the base environment:
+#+BEGIN_SRC bash
+pip install git+https://github.com/indigo-dc/udocker
+#+END_SRC
+
+*** Create your custom MySql container
+Clone the repet installation repo
+#+BEGIN_SRC bash
+git clone https://github.com/ibebio/repet3-install.git
+#+END_SRC
+
+From the repet3-install folder, run the mysql-setup script on
+burrito. It requires that udocker is present and working.
+#+BEGIN_SRC bash
+./mysql_setup.bash
+#+END_SRC
+
+A container with a MySql database, set up for REPET (user repet,
+password repet and database repetdb) is then created.
+
+
+*** Run your MySql server
+The server needs to run on burrito, so the cluster nodes can reach
+it.
+#+BEGIN_SRC bash
+./mysql_run.bash
+#+END_SRC
+
+Starts the udocker container with the server. It requires that udocker
+is present and working, and the MySql container was set up.
+
+It gives you a port number, which you can use in the TEDenovo.cfg
+
+Once done, run 
+#+BEGIN_SRC 
+killall mysqld
+#+END_SRC
+to stop the server.
+
+*** Adjustments to shell environment for running REPET
+The following settings make permanent adjustments to your bash
+initialization file, which are active for all bash sessions.
+
+Thus, it is best to only leave them in the ~/.bashrc file as long as
+you run the pipeline, and comment them out afterwards.
+
+Add the following lines to your ~/.bashrc:
+#+BEGIN_SRC bash
+###########
+# REPET initial testing
+#
+source activate /tmp/global2/ibezrukov2/conda/envs/repet3/
+source /ebio/abt6_projects7/small_projects/ibezrukov2/git/install-repet/repet_env
+export REPET_PATH=/tmp/global2/ibezrukov2/conda/envs/repet3/REPET/REPET_linux-x64-3.0
+export PATH=$REPET_PATH/bin:$PATH
+export PATH=/tmp/global2/ibezrukov2/conda/envs/repet3/bin/:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/global2/ibezrukov2/conda/envs/repet3/lib/
+#+END_SRC
+
+The above is not an elegant solution, since it activates the repet3
+environment per default, and might interfere with your other tools,
+but this is something to worry for later.
+
+*** Config file modifications
+6. Modify the TEdenovo.cfg settings:
+#+BEGIN_SRC text
+repet_version: 3.0
+repet_host: burrito
+repet_user: repet
+repet_pw: repet
+repet_db: repet_db
+repet_port: The port from the section above
+#+END_SRC
+
+*** Run the pipeline
+Start a new bash on burrito, which should put you inside the repet3
+environment.
+
+Run the commands from the Tutorial:
+
+#+BEGIN_SRC bash
+TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 1
+TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 2
+TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 3 -s Blaster -c Grouper
+#+END_SRC
+
+
+Here, a segfault occured, but this seems not be related to the
+pipeline installation:
+#+BEGIN_SRC text
+/tmp/global2/ibezrukov2/Repet_test/thlaspi_test_Blaster_Grouper/Grouper_1.e8157635
+#+END_SRC
