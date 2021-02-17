@@ -3,7 +3,7 @@
 *** Install conda
 *** Install a recent version of udocker
 The one in the conda repositories is too old. Once conda is set up,
-udocker can be installed into the base environment via pip. Check that
+udocker can be installed into a new environment via pip. Check that
 the conda installation of pip is used:
 
 #+BEGIN_SRC bash
@@ -12,8 +12,10 @@ which pip
 # If not, do NOT continue, and find the reason why not first.
 #+END_SRC
 
-Then, install udocker into the base environment:
+Then, install udocker into a new environment (named udocker here):
 #+BEGIN_SRC bash
+conda create -n udocker -c defaults python=2.7
+conda activate udocker
 pip install git+https://github.com/indigo-dc/udocker
 #+END_SRC
 
@@ -21,6 +23,13 @@ pip install git+https://github.com/indigo-dc/udocker
 Clone the repet installation repo
 #+BEGIN_SRC bash
 git clone https://github.com/ibebio/repet3-install.git
+#+END_SRC
+
+Pull the official mysql image into your local repository:
+
+#+BEGIN_SRC bash
+conda activate udocker
+udocker pull mysql:8.0
 #+END_SRC
 
 From the repet3-install folder, run the mysql-setup script on
@@ -35,7 +44,8 @@ password repet and database repetdb) is then created.
 
 *** Run your MySql server
 The server needs to run on burrito, so the cluster nodes can reach
-it.
+it. Udocker must be available, thus activate your udocker conda
+environment if required.
 #+BEGIN_SRC bash
 ./mysql_run.bash
 #+END_SRC
