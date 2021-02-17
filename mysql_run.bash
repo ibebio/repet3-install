@@ -22,6 +22,7 @@ echo "Starting MySql Container"
 echo "If you did not run it with $0 &, press Ctrl-Z, and type 'bg' to put it"
 echo "into background"
 
+export PROOT_NO_SECCOMP=1
 udocker run \
   --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" \
   --env="MYSQL_TCP_PORT=${MYSQL_TCP_PORT}" \

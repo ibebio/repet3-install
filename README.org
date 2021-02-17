@@ -45,7 +45,8 @@ is present and working, and the MySql container was set up.
 
 It gives you a port number, which you can use in the TEDenovo.cfg
 
-Once done, run 
+*When you are done with your experiments, don't forget to kill the server!*
+Run 
 #+BEGIN_SRC 
 killall mysqld
 #+END_SRC

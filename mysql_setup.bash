@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# set -xv
+set -xv
 
 ###############################################################################
 # Set variables, source them from the mysql_env.bash file in the same directory
@@ -27,6 +27,7 @@ udocker create --name=${MYSQL_CONTAINER} mysql:8.0
 # Create REPET database
 
 # Run the udocker MySql
+export PROOT_NO_SECCOMP=1
 udocker run \
   --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" \
   --env="MYSQL_TCP_PORT=${MYSQL_TCP_PORT}" \
