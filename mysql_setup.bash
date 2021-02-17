@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xv
+#set -xv
 
 ###############################################################################
 # Set variables, source them from the mysql_env.bash file in the same directory
