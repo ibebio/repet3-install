@@ -75,7 +75,7 @@ Add the following lines to your ~/.bashrc:
 # REPET initial testing
 #
 source activate /tmp/global2/ibezrukov2/conda/envs/repet3/
-source /ebio/abt6_projects7/small_projects/ibezrukov2/git/install-repet/repet_env
+source /ebio/abt6_projects7/small_projects/ibezrukov2/git/install-repet3/repet_env
 export REPET_PATH=/tmp/global2/ibezrukov2/conda/envs/repet3/REPET/REPET_linux-x64-3.0
 export PATH=$REPET_PATH/bin:$PATH
 export PATH=/tmp/global2/ibezrukov2/conda/envs/repet3/bin/:$PATH
