@@ -15,6 +15,8 @@ BIND_ADDRESS=172.18.3.222  # burrito for cluster access
 ###############################################################################
 
 
+# Kill existing udocker/mysql processes
+$(dirname $0)/kill_running_mysql.bash
 
 # Run the udocker MySql
 
@@ -27,7 +29,7 @@ udocker run \
   --env="MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}" \
   --env="MYSQL_TCP_PORT=${MYSQL_TCP_PORT}" \
   --env="BIND_ADDRESS=${BIND_ADDRESS}" \
-  --env="DEFAULT_STORAGE_ENGINE=MyISAM" \
+  --env="DEFAULT_STORAGE_ENGINE=INNODB" \
   ${MYSQL_CONTAINER} &
 
 while ! nc -z localhost ${MYSQL_TCP_PORT}; do
@@ -35,4 +37,4 @@ while ! nc -z localhost ${MYSQL_TCP_PORT}; do
   echo "Waiting for MySql container to start up ..."
 done
 
-mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"SET default_storage_engine=MYISAM;"
+mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"SET default_storage_engine=INNODB;"
