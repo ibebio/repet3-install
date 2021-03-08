@@ -41,6 +41,15 @@ burrito. It requires that udocker is present and working.
 A container with a MySql database, set up for REPET (user repet,
 password repet and database repetdb) is then created.
 
+If you repeat this step in order to recreate a fresh database, first
+run
+
+#+BEGIN_SRC bash
+./kill_running_mysql.bash
+#+END_SRC
+
+in order to kill any existing mysqld processes
+
 
 *** Run your MySql server
 The server needs to run on burrito, so the cluster nodes can reach
@@ -56,7 +65,14 @@ is present and working, and the MySql container was set up.
 It gives you a port number, which you can use in the TEDenovo.cfg
 
 *When you are done with your experiments, don't forget to kill the server!*
-Run 
+You can use 
+
+#+BEGIN_SRC bash
+./kill_running_mysql.bash
+#+END_SRC
+
+or 
+
 #+BEGIN_SRC 
 killall mysqld
 #+END_SRC
@@ -101,17 +117,24 @@ repet_port: The port from the section above
 Start a new bash on burrito, which should put you inside the repet3
 environment.
 
-Run the commands from the Tutorial:
+Run the commands from the tutorial - here with chromosome 1 of
+arabidopsis thaliana:
 
 #+BEGIN_SRC bash
-TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 1
-TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 2
-TEdenovo.py -P thlaspi_test -C TEdenovo.cfg -S 3 -s Blaster -c Grouper
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 1
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 1
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 2
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 3 -s Blaster -c Piler
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 3 -s Blaster -c Grouper
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 4 -s Blaster -c Grouper -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 4 -s Blaster -c Piler -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 5 -s Blaster -c GrpPil -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 5 -s Blaster -c GrpPil -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 6 -s Blaster -c GrpPil -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 7 -s Blaster -c GrpPil -m Map
+TEdenovo.py -P chrom1_at -C TEdenovo.cfg -S 8 -s Blaster -c GrpPil -m Map -f Blastclust
 #+END_SRC
 
 
-Here, a segfault occured, but this seems not be related to the
-pipeline installation:
-#+BEGIN_SRC text
-/tmp/global2/ibezrukov2/Repet_test/thlaspi_test_Blaster_Grouper/Grouper_1.e8157635
-#+END_SRC
+The `Recon` command in S3 from the [[%20https://urgi.versailles.inra.fr/Tools/REPET/TEdenovo-tuto#step3][documentation]] does not work -
+therefore, it is not included here, and `GrpPil` is used instead of `GrpRecPil`.

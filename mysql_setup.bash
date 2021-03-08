@@ -17,7 +17,7 @@ source ${SCRIPT_DIR}/mysql_env.bash
 # Create mysql docker image
 
 # Kill existing udocker/mysql user processes.
-${SCRIPT_DIR}/kill_running_mysql.bash
+#${SCRIPT_DIR}/kill_running_mysql.bash
 
 # Check if container already exists, if so, delete it.
 if [[ $(udocker ps |grep -c \'${MYSQL_CONTAINER}\') != 0 ]] ; then
@@ -51,6 +51,7 @@ mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"SET def
 mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"CREATE USER 'repet'@'%' IDENTIFIED BY 'repet';"
 mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"CREATE DATABASE repet_db;"
 mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"GRANT ALL PRIVILEGES ON repet_db.* TO 'repet'@'%';"
+mysql -h127.0.0.1 -P${MYSQL_TCP_PORT} -uroot -p${MYSQL_ROOT_PASSWORD} -e"SET PERSIST local_infile = 1;"
 
 # Kill all child processes spawned by udocker
 # pkill -P $$ # does not work

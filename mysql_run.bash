@@ -16,7 +16,7 @@ BIND_ADDRESS=172.18.3.222  # burrito for cluster access
 
 
 # Kill existing udocker/mysql processes
-$(dirname $0)/kill_running_mysql.bash
+#$(dirname $0)/kill_running_mysql.bash
 
 # Run the udocker MySql
 
